@@ -1,0 +1,65 @@
+/* reset de position pour tout afin de faciliter l'emplacement */
+* {
+    margin : 0;
+    padding : 0;
+}
+
+#titre {
+    color : blue;
+    
+}
+
+/* vérifier : background blanc, avec une ligne grise en bas et de bonne taille */
+header {
+    padding : 0 10px;
+    width : 100%;
+    height : 55px;
+    background-color : white;
+    border-style: hidden hidden solid hidden;
+    border-color: #bcbcbc;
+    position : fixed;
+    /* cette partie-là c'est pour que les éléments du header soient bien mis et qu'ils ne dépassent pas */
+    display : flex;
+    justify-content : space-between;
+    align-items : center;
+    box-sizing : border-box;
+}
+
+/* vérifier : background un peu gris, assez de place pour tous les elements */
+.content {
+    padding : 69px 20px;
+    background-color : #efefef;
+}
+
+/* boutons; vérifier :
+bonne taille
+avec fond : bleus avec texte blanc, si possible un gradient violet pour droite 
+sans fond : noirs et bleus si on est là dedans si possible */
+button {
+    margin : 0px 5px;
+    padding : 5px;
+    height : 30px;
+    border-style : hidden;
+    border-radius: 7px;
+}
+.sansFond {
+    background-color: white;
+    color : black;
+}
+.avecFond {
+    background-color: blue;
+    color : white;
+}
+
+/* la grille du catalogue
+Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier" */
+.container {
+    display : grid;
+    grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); /* cela permet d'ajuster le nbre de coulonnes par rapport à la taille de la fenêtre */
+    gap : 20px;
+}
+.container img {
+    height : 200px;
+    border-radius : 9px;
+    border : 1px solid black; /* RETIRER OU CHANGER APRES parce que c'est moche, c juste pour voir la forme exacte des images */
+}
