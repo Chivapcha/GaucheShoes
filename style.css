@@ -2,11 +2,15 @@
 * {
     margin : 0;
     padding : 0;
+    font-family :'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 #titre {
+    position : relative;
+    left : 5px;
     color : blue;
-    
+    font-weight : bold;
+    font-size : larger;
 }
 
 /* vérifier : background blanc, avec une ligne grise en bas et de bonne taille */
@@ -15,8 +19,7 @@ header {
     width : 100%;
     height : 55px;
     background-color : white;
-    border-style: hidden hidden solid hidden;
-    border-color: #bcbcbc;
+    box-shadow: 0px 0px 7px 1px rgb(203, 203, 203);
     position : fixed;
     /* cette partie-là c'est pour que les éléments du header soient bien mis et qu'ils ne dépassent pas */
     display : flex;
@@ -37,10 +40,11 @@ avec fond : bleus avec texte blanc, si possible un gradient violet pour droite
 sans fond : noirs et bleus si on est là dedans si possible */
 button {
     margin : 0px 5px;
-    padding : 5px;
-    height : 30px;
+    padding : 10px;
     border-style : hidden;
     border-radius: 7px;
+    cursor: pointer;
+    font-weight: 500;
 }
 .sansFond {
     background-color: white;
@@ -55,11 +59,113 @@ button {
 Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier" */
 .container {
     display : grid;
-    grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); /* cela permet d'ajuster le nbre de coulonnes par rapport à la taille de la fenêtre */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* cela permet d'ajuster le nbre de coulonnes par rapport à la taille de la fenêtre */
     gap : 20px;
+    justify-items: center;
+}
+.chaussure {
+    background-color: white;
+    height : 380px;
+    width : 300px;
+    border-radius : 9px;
+    overflow: hidden;
+    box-shadow: 0px 0px 7px 1px rgb(203, 203, 203);
 }
 .container img {
+    width : 100%;
+    height : 100%;
+    object-fit: cover;
+}
+.chaussImg {
+    height : 275px;
+    overflow : hidden;
+}
+.chausTexte {
+    padding : 10px;
+    display : flex;
+    flex-direction : column;
+}
+.nomChaussure {
+    font-weight: 500;
+    font-size : 20px;
+}
+.descChaussure {
+    font-size : 14px;
+}
+.prixChaussure {
+    font-size: 30px;
+    color : blue;
+    font-weight: bold;
+    position : relative;
+    top : 3px;
+}
+.chausTexte button {
+    margin-top : auto;
+    align-self: flex-end;
+    padding : 10px;
+}
+.prixBouton {
+    display : flex;
+    justify-content : space-between;
+    align-items: center;
+    margin-top : auto;
+}
+
+/* La partie du panier */
+.panierPopup {
+    position : fixed;
+    left : 0;
+    right : 0;
+    top : 0;
+    bottom : 0;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    background : rgba(0,0,0,0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+
+
+    display : none;
+}
+.panierContainer {
+    height : 80%;
+    width : 70%;
+    min-width: 600px;
+    min-height : 400px;
+    max-width : 800px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.panierHeader {
+    display: flex;
+    height : 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding : 0px 7px;
+}
+.panierBody{
+    height : 100%;
+    display : flex;
+    justify-content: space-between;
+    padding : 10px;
+}
+.panierAside {
+    float: right;
+    width : 225px;
     height : 200px;
-    border-radius : 9px;
-    border : 1px solid black; /* RETIRER OU CHANGER APRES parce que c'est moche, c juste pour voir la forme exacte des images */
+    box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
+    border-radius: 7px;
+    padding: 10px;
+    position: relative;
+    top: 90px;
+}
+.btnFermer {
+    left : 50px;
+}
+#passerCommande {
+    display : block;
+    margin : 0 auto;
+    margin-top : 7px;
 }
