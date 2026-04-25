@@ -124,9 +124,7 @@ Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier"
     background : rgba(0,0,0,0.5);
     backdrop-filter: blur(3px);
     z-index: 1000;
-
-
-    display : none;
+    visibility: hidden;
 }
 .panierContainer {
     height : 80%;
@@ -168,4 +166,58 @@ Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier"
     display : block;
     margin : 0 auto;
     margin-top : 7px;
+}
+
+/* La partie du compte */
+.comptePopup {
+    position : fixed;
+    left : 0;
+    right : 0;
+    top : 0;
+    bottom : 0;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    background : rgba(0,0,0,0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    visibility:hidden;
+}
+.compteContainer {
+    height : 80%;
+    width : 70%;
+    min-width: 600px;
+    min-height : 400px;
+    max-width : 800px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.compteHeader {
+    display: flex;
+    height : 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding : 0px 7px;
+}
+.compteBody{
+    height : 100%;
+    display : flex;
+    justify-content: space-between;
+    padding : 10px;
+}
+.compteAside {
+    float: right;
+    width : 225px;
+    height : 200px;
+    border-radius: 7px;
+    padding: 10px;
+    position: relative;
+    top: 90px;
+}
+.btnFermer {
+    left : 50px;
+}
+#historique  {
+    box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
 }

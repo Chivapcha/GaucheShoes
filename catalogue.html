@@ -13,9 +13,9 @@
                  panier, profil et le bouton pour passer aux chaussures droites -->
                 <p id="titre"><b>GaucheShoes</b></p>
                 <div class="boutons">
-                    <button type="button" id="cat" class="sansFond">Catalogue</button>
-                    <button type="button" id="panier" class="sansFond"><i class="fas fa-cart-shopping"></i></button>
-                    <button type="button" id="profil" class="sansFond"><i class="fas fa-user"></i></button>
+                    <a href="catalogue.html"><button id="cat" class="sansFond">Catalogue</button></a>
+                    <button onclick="ouvrirPanier()" class="sansFond"><i class="fas fa-cart-shopping"></i></button>
+                    <button onclick="ouvrirCompte()" class="sansFond"><i class="fas fa-user"></i></button>
                     <button type="button" class="avecFond" id="changeCote"><i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à droite</button>
                 </div> 
             </header>
@@ -135,11 +135,11 @@
 
             </div>
 
-            <div class="panierPopup">
+            <div class="panierPopup" id = "panier">
                 <div class="panierContainer">
                     <div class="panierHeader">
                         <h1 class="panierTitre">Mon Panier</h1>
-                        <button class="btnFermer" id="fermerPanier"><i class="fa-solid fa-xmark"></i></button>
+                        <button onclick="fermerPanier()" class="btnFermer"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div class="panierBody">
                         <div class="panierContenu">
@@ -152,6 +152,24 @@
                             <br><hr><br>
                             <h2>Total : <span class="total">0.00 €</span></h2>
                             <button class="avecFond" id="passerCommande">Passer la commande</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="comptePopup" id = "compte">
+                <div class="compteContainer">
+                    <div class="compteHeader">
+                        <h1 class="compteTitre">Mon Compte</h1>
+                        <button onclick="fermerCompte()" class="btnFermer"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="compteBody">
+                        <div class="compteContenu">
+                            <p>"Acceder au compte" ou des détails (nom etc)</p>
+                        </div>
+                        <div class="compteAside">
+                            <button class="avecFond" id="historique">Historique de mes commandes</button>
                         </div>
                     </div>
                     
