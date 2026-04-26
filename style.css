@@ -13,7 +13,6 @@
     font-size : larger;
 }
 
-/* vérifier : background blanc, avec une ligne grise en bas et de bonne taille */
 header {
     padding : 0 10px;
     width : 100%;
@@ -28,16 +27,14 @@ header {
     box-sizing : border-box;
 }
 
-/* vérifier : background un peu gris, assez de place pour tous les elements */
 .content {
     padding : 69px 20px;
     background-color : #efefef;
 }
 
 /* boutons; vérifier :
-bonne taille
-avec fond : bleus avec texte blanc, si possible un gradient violet pour droite 
-sans fond : noirs et bleus si on est là dedans si possible */
+avec fond : bleus avec texte blanc, si possible un gradient violet pour droite
+*/
 button {
     margin : 0px 5px;
     padding : 10px;
@@ -54,6 +51,10 @@ button {
     background-color: blue;
     color : white;
 }
+button:active { /* animation quand on clique */
+    box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.20);
+}
+/* NE MARCHE PAS SUR "historique des commandes"
 
 /* la grille du catalogue
 Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier" */
@@ -65,7 +66,7 @@ Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier"
 }
 .chaussure {
     background-color: white;
-    height : 380px;
+    height : 405px;
     width : 300px;
     border-radius : 9px;
     overflow: hidden;
@@ -90,6 +91,14 @@ Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier"
     font-size : 20px;
 }
 .descChaussure {
+    font-size : 14px;
+}
+select {
+    width : 50px;
+    border : 1px solid #bebebe;
+    border-radius : 3px;
+}
+.tailleText {
     font-size : 14px;
 }
 .prixChaussure {
