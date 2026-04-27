@@ -190,7 +190,7 @@ select {
     background : rgba(0,0,0,0.5);
     backdrop-filter: blur(3px);
     z-index: 1000;
-    visibility:hidden;
+    visibility: visible;
 }
 .compteContainer {
     height : 80%;
@@ -212,21 +212,48 @@ select {
 .compteBody{
     height : 100%;
     display : flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items : center;
     padding : 10px;
 }
 .compteAside {
-    float: right;
     width : 225px;
     height : 200px;
     border-radius: 7px;
     padding: 10px;
-    position: relative;
-    top: 90px;
+    position: absolute;
+    top: 250px;
+    right : 10px;
+    visibility : hidden;
 }
 .btnFermer {
     left : 50px;
 }
 #historique  {
     box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
+}
+.accederCompte {
+    width : 300px;
+    height : 120px;
+    padding : 20px;
+    box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
+    border-radius : 5px;
+    /* visibility : hidden;*/
+}
+.ligneForm {
+    display : flex;
+    align-items : center;
+}
+.ligneForm label {
+    width : 120px;
+}
+.ligneForm input {
+    border-radius : 4px;
+    height : 20px;
+    flex : 1;
+}
+#boutonAccederCompte {
+    position : relative;
+    left : 65px;
+    top : 20px;
 }
