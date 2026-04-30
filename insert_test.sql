@@ -1,3 +1,12 @@
+DELETE FROM Ligne_Commande;
+DELETE FROM Commande;
+DELETE FROM Stock_Chaussure;
+DELETE FROM Adresse;
+DELETE FROM Utilisateur;
+DELETE FROM Modele_Chaussure;
+
+DELETE FROM sqlite_sequence;
+
 INSERT INTO Utilisateur (nom_util, email, mdp_hash)
 VALUES
 ('Eliot', 'eliot@test.com', 'hash_eliot_test_0211'),
@@ -10,16 +19,16 @@ VALUES
 
 INSERT INTO Modele_Chaussure (marque, nom_modele, couleur, descr, image_url, prix)
 VALUES 
-('Nike', 'Air Test', 'Noir', 'Chaussure confortable', 'default.jpg', 79.99),
-('Adidas', 'Run Light', 'Blanc', 'Chaussure legere', 'default3.jpg', 69.99);
+('Nike', 'Air Test', 'Noir', 'Chaussure confortable', 'img/default.jpg', 79.99),
+('Adidas', 'Run Light', 'Blanc', 'Chaussure legere', 'img/default3.jpg', 69.99);
 
 INSERT INTO Stock_Chaussure (id_modele, taille, stock, pied)
 VALUES
 (1, 40, 5, 'gauche'),
-(1, 40, 5, 'droite'),
-(1, 41, 3, 'gauche'),
-(1, 41, 3, 'droite'),
-(2, 39, 4, 'gauche'),
+(1, 41, 5, 'droite'),
+(1, 42, 3, 'gauche'),
+(1, 43, 3, 'droite'),
+(2, 38, 4, 'gauche'),
 (2, 39, 4, 'droite');
 
 INSERT INTO Commande (id_user, id_adresse, date_commande, statut, total)

@@ -12,12 +12,22 @@ function fermerCompte() {
     document.getElementById("compte").style.visibility = "hidden";
 }
 
+let coteActuel = 'gauche';
+
+function switchCote() {
+  coteActuel = (coteActuel === 'gauche') ? 'droite' : 'gauche';
+
+  const bouton = document.getElementById('changeCote');
+  bouton.innerHTML = coteActuel === 'gauche' ? '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à droite' : '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à gauche';
+  chargerCatalogue();
+}
+
 async function chargerCatalogue() {
-  const reponse = await fetch("api_catalogue.php");
+  const reponse = await fetch(`api_catalogue.php?cote=${coteActuel}`);
   const produits = await reponse.json();
 
   for (const produit of produits) {
-    const repTailles = await fetch(`api_tailles.php?id_modele=${produit.id_modele}`);
+    const repTailles = await fetch(`api_tailles.php?id_modele=${produit.id_modele}&cote=${coteActuel}`);
     const taillesData = await repTailles.json();
     produit.tailles = [...new Set(taillesData.map(item => item.taille))];
   }

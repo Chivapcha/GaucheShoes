@@ -7,6 +7,8 @@ if (!isset($_GET['id_modele'])) {
     exit;
 }
 
+$cote = $_GET['cote'] ?? 'gauche';
+
 try {
     $db = new PDO('sqlite:projet.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -15,12 +17,12 @@ try {
         SELECT taille, pied, stock
         FROM Stock_Chaussure
         WHERE id_modele = :id_modele
-          AND stock > 0
+          AND stock > 0 AND pied = :cote
         ORDER BY taille, pied
     ";
 
     $stmt = $db->prepare($sql);
-    $stmt->execute([':id_modele' => $_GET['id_modele']]);
+    $stmt->execute([':id_modele' => $_GET['id_modele'],':cote' => $cote]);
     $tailles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($tailles, JSON_UNESCAPED_UNICODE);
