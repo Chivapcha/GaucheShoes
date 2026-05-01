@@ -33,22 +33,23 @@
                     <div class="loading">Chargement du catalogue...</div>
                 </div>
             </div>
-            <div class="panierPopup" id = "panier">
+            <div class="panierPopup" id="panier">
                 <div class="panierContainer">
                     <div class="panierHeader">
                         <h1 class="panierTitre">Mon Panier</h1>
                         <button onclick="fermerPanier()" class="btnFermer"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div class="panierBody">
-                        <div class="panierContenu">
+                        <div class="panierContenu" id="panierContenu">
                             <p>Panier vide</p>
                         </div>
                         <div class="panierAside">
                             <h2>Récapitulatif</h2>
-                            <p>Sous-total : <span class="sousTotal">0.00 €</span></p>
-                            <p>Livraison : <span class="livraison">0.00 €</span></p>
+                            <p>Sous-total : <span class="sousTotal" id="sousTotal">0.00 €</span></p>
+                            <p>Livraison : <span class="livraison" id="livraison">0.00 €</span></p>
+                            <p style="font-size: x-small;"><i>Livraison offerte a partir de 100.00 €</i></p>
                             <br><hr><br>
-                            <h2>Total : <span class="total">0.00 €</span></h2>
+                            <h2>Total : <span class="total" id="total">0.00 €</span></h2>
                             <button class="avecFond" id="passerCommande">Passer la commande</button>
                         </div>
                     </div>

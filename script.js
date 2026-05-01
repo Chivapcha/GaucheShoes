@@ -1,5 +1,6 @@
 function ouvrirPanier() {
     document.getElementById("panier").style.visibility = "visible";
+    afficherPanier();
 }
 function fermerPanier() {
     document.getElementById("panier").style.visibility = "hidden";
@@ -10,6 +11,89 @@ function ouvrirCompte() {
 }
 function fermerCompte() {
     document.getElementById("compte").style.visibility = "hidden";
+}
+
+let panier = [];
+
+function ajouterAuPanier(idModele, nomModele, prix) {
+  const select = document.getElementById(`taille-${idModele}`);
+  const taille = select.value;
+
+  if (!taille) {
+    alert("Choisis une taille d'abord !");
+    return;
+  }
+
+  const ligneExistante = panier.find(item => item.id_modele == idModele && item.taille == taille && item.cote == coteActuel);
+
+  if (ligneExistante) {
+    ligneExistante.quantite += 1;
+  } else {
+    panier.push({
+      id_modele: idModele,
+      nom_modele: nomModele,
+      prix: Number(prix),
+      taille: Number(taille),
+      cote: coteActuel,
+      quantite: 1
+    });
+  }
+  afficherPanier();
+  console.log("Ajouté:", {idModele, nomModele, taille, cote: coteActuel});
+}
+
+function afficherPanier() {
+  const container = document.getElementById("panierContenu");
+  const sousTotalElt = document.getElementById("sousTotal");
+  const livraisonElt = document.getElementById("livraison");
+  const totalElt = document.getElementById("total");
+
+  container.innerHTML = "";
+
+  if (panier.length === 0) {
+    container.innerHTML = "<p>Panier vide</p>";
+    sousTotalElt.textContent = "0.00 €";
+    livraisonElt.textContent = "0.00 €";
+    totalElt.textContent = "0.00 €";
+    return;
+  }
+
+  let sousTotal = 0;
+
+  panier.forEach((item, index) => {
+    const totalLigne = item.prix * item.quantite;
+    sousTotal += totalLigne;
+    
+    container.innerHTML += `
+      <div class="ligne-panier">
+        <p><strong>${item.nom_modele}</strong></p>
+        <p>Taille : ${item.taille} | Côté : ${item.cote}</p>
+        <p>Quantité : ${item.quantite}</p>
+        <p>${totalLigne.toFixed(2)} €</p>
+        <button onclick="supprimerDuPanier(${index})">Supprimer</button>
+      </div>
+      <hr>
+    `;
+  });
+
+  const livraison = sousTotal > 0 ? (sousTotal < 100 ? 12.98 : 0) : 0;
+  const total = sousTotal + livraison;
+
+  sousTotalElt.textContent = `${sousTotal.toFixed(2)} €`;
+  livraisonElt.textContent = `${livraison.toFixed(2)} €`;
+  totalElt.textContent = `${total.toFixed(2)} €`;
+}
+
+function supprimerDuPanier(index) {
+  const item = panier[index];
+
+  if (item.quantite > 1) {
+    item.quantite -= 1;
+  } else {
+    panier.splice(index, 1);
+  }
+  
+  afficherPanier();
 }
 
 let coteActuel = 'gauche';
@@ -53,19 +137,23 @@ function afficherCatalogue(produits) {
         <div class="chaussImg">
           <img src="${produit.image_url}" alt="${produit.nom_modele}">
         </div>
+
         <div class="chausTexte">
           <b class="nomChaussure">${produit.marque} ${produit.nom_modele}</b>
           <p class="descChaussure">${produit.descr}</p>
+
           <p>
             <span class="tailleText">Je choisis ma taille : </span>
-            <select class="taille">
+            <select id="taille-${produit.id_modele}" class="taille">
+              <option value="">--</option>
               ${optionsTailles}
             </select>
           </p>
+          
           <div class="prixBouton">
-            <p class="prixChaussure">${produit.prix.toFixed(2)} €</p>
-            <button type="button" class="avecFond">
-              <i class="fas fa-cart-shopping"></i> Ajouter
+            <p class="prixChaussure">${Number(produit.prix).toFixed(2)} €</p>
+            <button type="button" class="avecFond" onclick="ajouterAuPanier(${produit.id_modele}, '${produit.nom_modele.replace(/'/g, "\\'").replace(/"/g, '\\"')}', ${produit.prix})">
+              <i class="fas fa-cart-shopping"></i> Ajouter au panier
             </button>
           </div>
         </div>
@@ -73,5 +161,3 @@ function afficherCatalogue(produits) {
     `;
   });
 }
-
-afficherCatalogue(produits);
