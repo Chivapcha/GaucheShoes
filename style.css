@@ -144,6 +144,8 @@ select {
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 .panierHeader {
     display: flex;
@@ -153,20 +155,27 @@ select {
     padding : 0px 7px;
 }
 .panierBody{
-    height : 100%;
+    flex: 1;
+    min-height: 0;
     display : flex;
     justify-content: space-between;
     padding : 10px;
+    gap: 10px;
+}
+.panierContenu {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    padding-right: 8px;
 }
 .panierAside {
-    float: right;
+    flex: 0 0 225px;
     width : 225px;
-    height : 200px;
+    height : fit-content;
     box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
     border-radius: 7px;
     padding: 10px;
-    position: relative;
-    top: 90px;
+    align-self: flex-start;
 }
 .btnFermer {
     left : 50px;

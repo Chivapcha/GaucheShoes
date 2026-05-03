@@ -11,11 +11,37 @@ function ouvrirCompte() {
 }
 function fermerCompte() {
     document.getElementById("compte").style.visibility = "hidden";
+    document.getElementById("creationCompte").style.visibility = "hidden";
+    document.getElementById("connexionCompte").style.visibility = "hidden";
+}
+
+function ouvrirInscription() {
+    document.getElementById("creationCompte").style.visibility = "visible";
+    document.getElementById("connexionCompte").style.visibility = "hidden";
+}
+
+function ouvrirConnexion() {
+    document.getElementById("connexionCompte").style.visibility = "visible";
+    document.getElementById("creationCompte").style.visibility = "hidden";
 }
 
 let panier = [];
 
-function ajouterAuPanier(idModele, nomModele, prix) {
+function sauvegarderPanier() {
+  localStorage.setItem("panier", JSON.stringify(panier));
+}
+
+function chargerPanierDepuisStockage() {
+  const panierSauvegarde = localStorage.getItem("panier");
+
+  if (panierSauvegarde) {
+    panier = JSON.parse(panierSauvegarde);
+  } else {
+    panier = [];
+  }
+}
+
+function ajouterAuPanier(idModele, nomModele, prix, imageUrl) {
   const select = document.getElementById(`taille-${idModele}`);
   const taille = select.value;
 
@@ -33,13 +59,15 @@ function ajouterAuPanier(idModele, nomModele, prix) {
       id_modele: idModele,
       nom_modele: nomModele,
       prix: Number(prix),
+      image_url: imageUrl,
       taille: Number(taille),
       cote: coteActuel,
       quantite: 1
     });
   }
+
+  sauvegarderPanier();
   afficherPanier();
-  console.log("Ajouté:", {idModele, nomModele, taille, cote: coteActuel});
 }
 
 function afficherPanier() {
@@ -67,6 +95,7 @@ function afficherPanier() {
     container.innerHTML += `
       <div class="ligne-panier">
         <p><strong>${item.nom_modele}</strong></p>
+        <p><img src="${item.image_url || 'img/default.jpg'}" alt="${item.nom_modele}" class="miniature" style="width: 100px; height: 100px;"></p>
         <p>Taille : ${item.taille} | Côté : ${item.cote}</p>
         <p>Quantité : ${item.quantite}</p>
         <p>${totalLigne.toFixed(2)} €</p>
@@ -93,6 +122,13 @@ function supprimerDuPanier(index) {
     panier.splice(index, 1);
   }
   
+  sauvegarderPanier();
+  afficherPanier();
+}
+
+function viderPanier() {
+  panier = [];
+  localStorage.removeItem("panier");
   afficherPanier();
 }
 
@@ -120,7 +156,9 @@ async function chargerCatalogue() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  chargerPanierDepuisStockage();
   chargerCatalogue();
+  afficherPanier();
 });
 
 function afficherCatalogue(produits) {
@@ -152,7 +190,7 @@ function afficherCatalogue(produits) {
           
           <div class="prixBouton">
             <p class="prixChaussure">${Number(produit.prix).toFixed(2)} €</p>
-            <button type="button" class="avecFond" onclick="ajouterAuPanier(${produit.id_modele}, '${produit.nom_modele.replace(/'/g, "\\'").replace(/"/g, '\\"')}', ${produit.prix})">
+            <button type="button" class="avecFond" onclick="ajouterAuPanier(${produit.id_modele}, '${produit.nom_modele.replace(/'/g, "\\'").replace(/"/g, '\\"')}', ${produit.prix}, '${produit.image_url.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">
               <i class="fas fa-cart-shopping"></i> Ajouter au panier
             </button>
           </div>
