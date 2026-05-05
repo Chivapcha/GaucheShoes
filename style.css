@@ -5,6 +5,19 @@
     font-family :'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/*
+body {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    /*filter: FlipH;
+    -ms-filter: "FlipH";*/
+
+    /*JSP CE QUE CA FAIT à retirer après 
+    
+*/
+
 #titre {
     position : relative;
     left : 5px;
@@ -133,14 +146,16 @@ select {
     background : rgba(0,0,0,0.5);
     backdrop-filter: blur(3px);
     z-index: 1000;
-    visibility: hidden;
+    visibility: visible;
 }
 .panierContainer {
     height : 80%;
     width : 70%;
-    min-width: 600px;
+    /*min-width: 600px;
     min-height : 400px;
-    max-width : 800px;
+    max-width : 800px;*/ /*on a retiré ça parce que ça faisait un truc bizarre */
+    min-width : 750px;
+    max-width : 750px;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -167,6 +182,36 @@ select {
     min-width: 0;
     overflow-y: auto;
     padding-right: 8px;
+}
+.ligne-panier {
+    display : flex;
+    box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
+    min-width : 300px;
+    overflow : hidden;
+    height : 150px;
+    border-radius : 5px;
+}
+.ligne-panier img {
+    width : 150px;
+    height : 147px;
+    object-fit: cover;
+    border : 2px solid rgb(186, 186, 186);
+    border-radius : 5px;
+}
+.detailsArtPanier {
+    display: inline;
+    padding : 5px;
+    position : relative;
+    top : 15px;
+    width : 110px;
+}
+.ligne-panier button {
+    height : 45px;
+    background-color : rgb(255, 74, 74);
+    color : black;
+    position : relative;
+    top : 90px;
+    left : 80px;
 }
 .panierAside {
     flex: 0 0 225px;

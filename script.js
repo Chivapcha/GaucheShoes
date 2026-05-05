@@ -94,14 +94,17 @@ function afficherPanier() {
     
     container.innerHTML += `
       <div class="ligne-panier">
-        <p><strong>${item.nom_modele}</strong></p>
-        <p><img src="${item.image_url || 'img/default.jpg'}" alt="${item.nom_modele}" class="miniature" style="width: 100px; height: 100px;"></p>
-        <p>Taille : ${item.taille} | Côté : ${item.cote}</p>
-        <p>Quantité : ${item.quantite}</p>
-        <p>${totalLigne.toFixed(2)} €</p>
+        <img src="${item.image_url || 'img/default.jpg'}" alt="${item.nom_modele}" class="miniature">
+        <div class="detailsArtPanier">
+          <strong>${item.nom_modele}</strong>
+          <p>Taille : ${item.taille}</p>
+          <p>Côté : ${item.cote}</p>
+          <p>Quantité : ${item.quantite}</p>
+          <p>${totalLigne.toFixed(2)} €</p>
+        </div>
         <button onclick="supprimerDuPanier(${index})">Supprimer</button>
       </div>
-      <hr>
+      <br>
     `;
   });
 
