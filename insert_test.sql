@@ -9,9 +9,9 @@ DELETE FROM sqlite_sequence;
 
 INSERT INTO Utilisateur (nom_util, email, mdp_hash)
 VALUES
-('Eliot', 'eliot@test.com', 'hash_eliot_test_0211'),
-('Yana', 'yana@test.com', 'hash_yana_test_3003');
-
+('Eliot', 'eliot@test.com', '$2y$12$S9Wi.rwSqYp4/sr3zwxp8Oo.O/p3NlPa7pBOw/eAWHGkMukKCmNWC'),
+('Yana', 'yana@test.com', '$2y$12$Cru3S7Sgc2QnE4n9ljUyI.TlqS0esEr8IwHc2T0D2jtYi1BodbwgG');
+/*hash_yana_test_3003*/
 INSERT INTO Adresse (id_user, rue, ville, code_postal, pays)
 VALUES
 (2, '948 rue des orang-outans', 'Lille', '59000', 'Ukraine'),

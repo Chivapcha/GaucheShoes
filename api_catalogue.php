@@ -4,8 +4,8 @@ header('Content-Type: application/json; charset=utf-8');
 $cote = $_GET['cote'] ?? 'gauche';
 
 try {
-    $db = new PDO('sqlite:projet.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require_once 'db.php';
+    $db = getDb();
 
     $sql = "
         SELECT DISTINCT

@@ -33,7 +33,7 @@ CREATE TABLE Stock_Chaussure (
     taille INTEGER NOT NULL CHECK (taille >= 0),
     stock INTEGER NOT NULL CHECK (stock >= 0),
     pied TEXT NOT NULL CHECK (pied IN ('gauche', 'droite')),
-    UNIQUE (id_modele, taille, pied)
+    UNIQUE (id_modele, taille, pied),
     FOREIGN KEY (id_modele) REFERENCES Modele_Chaussure(id_modele)
 );
 

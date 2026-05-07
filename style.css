@@ -15,8 +15,8 @@ body {
     -ms-filter: "FlipH";*/
 
     /*JSP CE QUE CA FAIT à retirer après 
-    
 */
+
 
 #titre {
     position : relative;
@@ -38,6 +38,47 @@ header {
     justify-content : space-between;
     align-items : center;
     box-sizing : border-box;
+    z-index: 100;
+}
+
+.menuCompteCont {
+    position: relative;
+    display: inline-block;
+}
+
+.menuCompteDropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 0;
+    z-index: 101;
+    border-radius: 5px;
+}
+
+.menuItem {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-size: 14px;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.menuItem:hover {
+    background-color: #f0f0f0;
+}
+
+.menuItem:active {
+    background-color: #e0e0e0;
 }
 
 .content {
