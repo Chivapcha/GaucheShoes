@@ -39,6 +39,7 @@ function fermerMenuCompte() {
 }
 
 let panier = [];
+let utilisateurActuel = null;
 
 // Validation et affichage d'erreurs
 function validerEmail(email) {
@@ -304,14 +305,47 @@ async function deconnecterUtilisateur() {
 function mettreAJourInterfaceUtilisateur(utilisateur) {
   const boutonCompte = document.getElementById("boutonCompte");
   const btnDeconnecter = document.getElementById("btnDeconnecter");
+  const btnConnexion = document.getElementById("btnConnexion");
+  const btnInfoCompte = document.getElementById("btnInfoCompte");
+
+  utilisateurActuel = utilisateur;
 
   if (utilisateur) {
     boutonCompte.innerHTML = `<i class="fas fa-user"></i> ${utilisateur.nom_util}`;
     btnDeconnecter.style.display = "block";
+    btnConnexion.style.display = "none";
+    btnInfoCompte.style.display = "block";
   } else {
     boutonCompte.innerHTML = `<i class="fas fa-user"></i>`;
     btnDeconnecter.style.display = "none";
+    btnConnexion.style.display = "block";
+    btnInfoCompte.style.display = "none";
   }
+}
+
+function ouvrirInfoCompte() {
+  if (utilisateurActuel) {
+    const infoBody = document.querySelector(".infoCompteBody");
+    infoBody.innerHTML = `
+      <div>
+        <p><strong>Nom :</strong> ${utilisateurActuel.nom_util}</p>
+        <p><strong>Email :</strong> ${utilisateurActuel.email}</p>
+        <br>
+        <button onclick="afficherHistorique()" class="avecFond">Historique des commandes</button>
+      </div>
+    `;
+  }
+  document.getElementById("infoCompte").style.visibility = "visible";
+  fermerMenuCompte();
+}
+
+function afficherHistorique() {
+  // Fonction pour afficher l'historique des commandes
+  // À implémenter
+}
+
+function fermerInfoCompte() {
+  document.getElementById("infoCompte").style.visibility = "hidden";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

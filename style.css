@@ -187,7 +187,7 @@ select {
     background : rgba(0,0,0,0.5);
     backdrop-filter: blur(3px);
     z-index: 1000;
-    visibility: visible;
+    visibility: hidden;
 }
 .panierContainer {
     height : 80%;
@@ -351,4 +351,44 @@ select {
     position : relative;
     left : 65px;
     top : 20px;
+}
+
+/* La partie du profil utilisateur */
+.infoComptePopup {
+    position : fixed;
+    left : 0;
+    right : 0;
+    top : 0;
+    bottom : 0;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    background : rgba(0,0,0,0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    visibility: visible;
+}
+.infoCompteContainer {
+    height : 80%;
+    width : 70%;
+    min-width: 600px;
+    min-height : 400px;
+    max-width : 800px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.infoCompteHeader {
+    display: flex;
+    height : 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding : 0px 7px;
+}
+.infoCompteBody {
+    flex: 1;
+    padding : 20px;
+    overflow-y: auto;
 }
