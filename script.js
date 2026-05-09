@@ -106,6 +106,23 @@ function ajouterAuPanier(idModele, nomModele, prix, imageUrl) {
 
   sauvegarderPanier();
   afficherPanier();
+
+  // Mettre à jour l'affichage du stock côté client (décrémenter)
+  const opt = select.querySelector(`option[value="${taille}"]`);
+  if (opt) {
+    const s = Number(opt.dataset.stock || 0) - 1;
+    if (s <= 0) {
+      // retirer l'option si plus de stock
+      opt.remove();
+      // si la taille retirée était sélectionnée, réinitialiser
+      if (select.value === taille) {
+        select.value = '';
+      }
+    } else {
+      opt.dataset.stock = s;
+    }
+    updateStockDisplay(idModele);
+  }
 }
 
 function afficherPanier() {
@@ -165,6 +182,27 @@ function supprimerDuPanier(index) {
   
   sauvegarderPanier();
   afficherPanier();
+
+  // Mettre à jour l'affichage du stock côté client (incrémenter)
+  try {
+    const select = document.getElementById(`taille-${item.id_modele}`);
+    if (select) {
+      let opt = select.querySelector(`option[value="${item.taille}"]`);
+      if (opt) {
+        opt.dataset.stock = Number(opt.dataset.stock || 0) + 1;
+      } else {
+        // recréer l'option si elle avait été retirée
+        opt = document.createElement('option');
+        opt.value = item.taille;
+        opt.dataset.stock = 1;
+        opt.textContent = item.taille;
+        select.appendChild(opt);
+      }
+      updateStockDisplay(item.id_modele);
+    }
+  } catch (e) {
+    console.error('Erreur en mettant à jour le stock affiché', e);
+  }
 }
 
 function viderPanier() {
@@ -190,7 +228,12 @@ async function chargerCatalogue() {
   for (const produit of produits) {
     const repTailles = await fetch(`api_tailles.php?id_modele=${produit.id_modele}&cote=${coteActuel}`);
     const taillesData = await repTailles.json();
-    produit.tailles = [...new Set(taillesData.map(item => item.taille))];
+    // convertir en tableau d'objets {taille, stock} et garder une entrée par taille
+    const mapTailles = {};
+    for (const t of taillesData) {
+      mapTailles[t.taille] = Number(t.stock);
+    }
+    produit.tailles = Object.keys(mapTailles).map(t => ({ taille: Number(t), stock: mapTailles[t] }));
   }
 
   afficherCatalogue(produits);
@@ -331,7 +374,7 @@ function ouvrirInfoCompte() {
         <p><strong>Nom :</strong> ${utilisateurActuel.nom_util}</p>
         <p><strong>Email :</strong> ${utilisateurActuel.email}</p>
         <br>
-        <button onclick="afficherHistorique()" class="avecFond">Historique des commandes</button>
+        <button onclick="afficherHistorique()" class="avecFond" id="boutonHistoriqueCommandes">Historique des commandes</button>
       </div>
     `;
   }
@@ -339,9 +382,78 @@ function ouvrirInfoCompte() {
   fermerMenuCompte();
 }
 
-function afficherHistorique() {
-  // Fonction pour afficher l'historique des commandes
-  // À implémenter
+async function afficherHistorique() {
+  const infoBody = document.querySelector(".infoCompteBody");
+
+  if (!utilisateurActuel) {
+    infoBody.innerHTML = `<p>Vous devez être connecté pour voir vos commandes.</p>`;
+    return;
+  }
+
+  infoBody.innerHTML = `<p>Chargement des commandes en cours...</p>`;
+
+  try {
+    const reponse = await fetch('api_historique_commandes.php', {
+      credentials: 'same-origin'
+    });
+    const data = await reponse.json();
+
+    if (!reponse.ok) {
+      infoBody.innerHTML = `<p>${data.erreur || 'Impossible de charger les commandes'}</p>`;
+      return;
+    }
+
+    const commandes = data.commandes || [];
+
+    if (commandes.length === 0) {
+      infoBody.innerHTML = `
+        <button type="button" class="avecFond" onclick="ouvrirInfoCompte()" style="margin-bottom: 16px;">
+          Retour aux infos du compte
+        </button>
+        <p>Aucune commande en cours.</p>
+      `;
+      return;
+    }
+
+    const etatTexte = {
+      en_attente: 'En attente',
+      payee: 'Payée',
+      expediee: 'Expédiée'
+    };
+
+    infoBody.innerHTML = `
+      <button type="button" class="avecFond" onclick="ouvrirInfoCompte()" style="margin-bottom: 16px;">
+        Retour aux infos du compte
+      </button>
+      ${commandes.map(cmd => `
+      <div class="commandeBloc" style="margin-bottom: 18px; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+        <p><strong>Commande #${cmd.id_commande}</strong></p>
+        <p>Date : ${cmd.date_commande}</p>
+        <p>Statut : ${etatTexte[cmd.statut] || cmd.statut}</p>
+        <p>Total : ${Number(cmd.total).toFixed(2)} €</p>
+        <div style="margin-top: 10px;">
+          ${cmd.lignes.map(ligne => `
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+              <img src="${ligne.image_url || 'img/default.jpg'}" alt="${ligne.nom_modele}" style="width:48px; height:48px; object-fit:cover; border-radius:6px;">
+              <div>
+                <p><strong>${ligne.marque} ${ligne.nom_modele}</strong></p>
+                <p>Taille ${ligne.taille} - ${ligne.pied} - Qté ${ligne.quantite}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('')}
+    `;
+  } catch (e) {
+    console.error(e);
+    infoBody.innerHTML = `
+      <button type="button" class="avecFond" onclick="ouvrirInfoCompte()" style="margin-bottom: 16px;">
+        Retour aux infos du compte
+      </button>
+      <p>Erreur lors du chargement de l'historique.</p>
+    `;
+  }
 }
 
 function fermerInfoCompte() {
@@ -356,6 +468,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("boutonCreerCompte").addEventListener("click", inscrireUtilisateur);
   document.getElementById("boutonConnexioncompte").addEventListener("click", connecterUtilisateur);
+  const historiqueBtn = document.getElementById("historique");
+  if (historiqueBtn) {
+    historiqueBtn.addEventListener("click", afficherHistorique);
+  }
 
   // Fermer le menu si on clique ailleurs
   document.addEventListener("click", (e) => {
@@ -369,13 +485,78 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Utilitaire client-side pour exiger la connexion avant une action
+function requireLogin(action) {
+  if (utilisateurActuel) {
+    try {
+      action();
+    } catch (e) {
+      console.error(e);
+      alert('Une erreur est survenue');
+    }
+  } else {
+    ouvrirCompte();
+  }
+}
+
+// Envoie le panier au serveur pour créer une commande (nécessite session)
+async function passerCommande() {
+  if (!utilisateurActuel) {
+    ouvrirCompte();
+    return;
+  }
+
+  if (!panier || panier.length === 0) {
+    alert('Votre panier est vide');
+    return;
+  }
+
+  const payload = {
+    panier: panier,
+    adresse: null // ici on ne collecte pas d'adresse; le serveur utilisera une adresse existante ou créera une entrée vide
+  };
+
+  try {
+    const resp = await fetch('api_passer_commande.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(payload)
+    });
+
+    const data = await resp.json();
+
+    if (!resp.ok) {
+      alert(data.erreur || 'Erreur lors de la création de la commande');
+      return;
+    }
+
+    // succès
+    alert('✓ Commande créée (id ' + data.id_commande + ')');
+    // vider le panier côté client
+    viderPanier();
+    fermerPanier();
+    // rafraîchir le catalogue pour récupérer les nouveaux stocks côté serveur
+    chargerCatalogue();
+  } catch (e) {
+    console.error(e);
+    alert('Erreur réseau lors de la commande');
+  }
+}
+
+// lier le bouton si présent (gestion au chargement différée)
+document.addEventListener('DOMContentLoaded', () => {
+  const btnPasser = document.getElementById('passerCommande');
+  if (btnPasser) btnPasser.addEventListener('click', () => requireLogin(passerCommande));
+});
+
 function afficherCatalogue(produits) {
   const container = document.getElementById("catalogueContainer");
   container.innerHTML = "";
 
   produits.forEach(produit => {
     const optionsTailles = produit.tailles
-      .map(taille => `<option value="${taille}">${taille}</option>`)
+      .map(t => `<option value="${t.taille}" data-stock="${t.stock}">${t.taille}</option>`)
       .join("");
 
     container.innerHTML += `
@@ -390,10 +571,11 @@ function afficherCatalogue(produits) {
 
           <p>
             <span class="tailleText">Je choisis ma taille : </span>
-            <select id="taille-${produit.id_modele}" class="taille">
-              <option value="">--</option>
-              ${optionsTailles}
-            </select>
+              <select id="taille-${produit.id_modele}" class="taille" onchange="updateStockDisplay(${produit.id_modele})">
+                <option value="">--</option>
+                ${optionsTailles}
+              </select>
+              <span class="stockInfo" id="stock-${produit.id_modele}" style="margin-left:8px;font-size:0.9em;color:#333"></span>
           </p>
           
           <div class="prixBouton">
@@ -405,5 +587,29 @@ function afficherCatalogue(produits) {
         </div>
       </div>
     `;
+
+    // initialiser l'affichage du stock (au cas où une taille par défaut est sélectionnée)
+    setTimeout(() => updateStockDisplay(produit.id_modele), 0);
   });
+}
+
+// Met à jour l'affichage du stock à côté du sélecteur de taille
+function updateStockDisplay(idModele) {
+  const select = document.getElementById(`taille-${idModele}`);
+  const span = document.getElementById(`stock-${idModele}`);
+  if (!select || !span) return;
+
+  const val = select.value;
+  if (!val) {
+    span.textContent = '';
+    return;
+  }
+
+  const opt = select.options[select.selectedIndex];
+  const stock = opt ? opt.dataset.stock : null;
+  if (stock === undefined || stock === null) {
+    span.textContent = '';
+  } else {
+    span.textContent = `Stock : ${stock}`;
+  }
 }
