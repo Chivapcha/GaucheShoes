@@ -218,6 +218,8 @@ function switchCote() {
 
   const bouton = document.getElementById('changeCote');
   bouton.innerHTML = coteActuel === 'gauche' ? '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à droite' : '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à gauche';
+
+  document.getElementById("body").style.transform = coteActuel === 'gauche' ? 'scaleX(1)' : 'scaleX(-1)';
   chargerCatalogue();
 }
 

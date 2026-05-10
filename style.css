@@ -5,17 +5,10 @@
     font-family :'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-/*
-body {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    /*filter: FlipH;
-    -ms-filter: "FlipH";*/
 
-    /*JSP CE QUE CA FAIT à retirer après 
-*/
+body {
+    transform: scaleX(1);
+}
 
 
 #titre {
@@ -86,9 +79,7 @@ header {
     background-color : #efefef;
 }
 
-/* boutons; vérifier :
-avec fond : bleus avec texte blanc, si possible un gradient violet pour droite
-*/
+
 button {
     margin : 0px 5px;
     padding : 10px;
@@ -192,11 +183,9 @@ select {
 .panierContainer {
     height : 80%;
     width : 70%;
-    /*min-width: 600px;
-    min-height : 400px;
-    max-width : 800px;*/ /*on a retiré ça parce que ça faisait un truc bizarre */
     min-width : 750px;
     max-width : 750px;
+    max-height : 500px;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -275,10 +264,7 @@ select {
 /* La partie du compte */
 .comptePopup {
     position : fixed;
-    left : 0;
-    right : 0;
-    top : 0;
-    bottom : 0;
+    inset : 0;
     display : flex;
     justify-content: center;
     align-items : center;
@@ -288,11 +274,8 @@ select {
     visibility: visible;
 }
 .compteContainer {
-    height : 80%;
-    width : 70%;
-    min-width: 600px;
-    min-height : 400px;
-    max-width : 800px;
+    height : 500px;
+    width : 750px;
     background-color: white;
     border-radius: 15px;
     overflow: hidden;
