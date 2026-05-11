@@ -99,7 +99,6 @@ button {
 button:active { /* animation quand on clique */
     box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.20);
 }
-/* NE MARCHE PAS SUR "historique des commandes"
 
 /* la grille du catalogue
 Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier" */
@@ -357,6 +356,9 @@ select {
     position : relative;
     left : 65px;
     top : 20px;
+}
+.commandeBloc {
+    box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
 }
 
 /* La partie du profil utilisateur */
