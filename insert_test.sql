@@ -22,7 +22,7 @@ VALUES
 ('Nike', 'Lighting', 'Saumon', 'Chaussure qui coure vite', 'img/c3.jpg', 35.76),
 ('Parso', 'Loddes', 'Marron', 'Chaussure qui coute cher', 'img/c1.jpg', 84.54),
 ('Parso', 'Talles', 'Noire', 'Chaussure à talon', 'img/c2.jpg', 31.28),
-('Quick', 'Salmons', 'Saumon', 'Description trop trop trop longue il faut que tu modifie ca si tu peux stp parce que sinon', 'img/c4.jpg', 37.65);
+('Quick', 'Salmons', 'Saumon', 'Chaussure de course', 'img/c4.jpg', 37.65);
 
 INSERT INTO Stock_Chaussure (id_modele, taille, stock, pied)
 VALUES

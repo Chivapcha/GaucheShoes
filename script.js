@@ -221,6 +221,26 @@ function switchCote() {
 
   const bouton = document.getElementById('changeCote');
   bouton.innerHTML = coteActuel === 'gauche' ? '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à droite' : '<i class="fa-solid fa-arrow-right-arrow-left"></i> Passer à gauche';
+  const titreGauche = document.getElementById('NCG');
+  const titreDroite = document.getElementById('NCD');
+  if (coteActuel === 'gauche') {
+    titreGauche.style.display = 'block';
+    titreDroite.style.display = 'none';
+  } else {
+    titreGauche.style.display = 'none';
+    titreDroite.style.display = 'block';
+  }
+
+  const descGauche = document.getElementById('DSCG');
+  const descDroite = document.getElementById('DSCD');
+  if (coteActuel === 'gauche') {
+    descGauche.style.display = 'block';
+    descDroite.style.display = 'none';
+  }
+    else {
+    descGauche.style.display = 'none';
+    descDroite.style.display = 'block';
+  }
 
   document.getElementById("body").style.transform = coteActuel === 'gauche' ? 'scaleX(1)' : 'scaleX(-1)';
   chargerCatalogue();
