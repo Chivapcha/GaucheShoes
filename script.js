@@ -63,6 +63,7 @@ function effacerErreurs() {
     afficherErreur("emailError", "");
     afficherErreur("passwordError", "");
     afficherErreur("newPasswordError", "");
+    afficherErreur("nameError", "");
 }
 
 function sauvegarderPanier() {
@@ -249,7 +250,7 @@ async function inscrireUtilisateur() {
 
   // Validations
   if (!nom) {
-    afficherErreur("newPasswordError", "Le nom est requis");
+    afficherErreur("nameError", "Le nom est requis");
     return;
   }
 
