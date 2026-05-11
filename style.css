@@ -100,8 +100,7 @@ button:active { /* animation quand on clique */
     box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.20);
 }
 
-/* la grille du catalogue
-Vérifier : chaque case =  image + un peu de texte et un bouton "dans le panier" */
+/* la grille du catalogue */
 .container {
     display : grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* cela permet d'ajuster le nbre de coulonnes par rapport à la taille de la fenêtre */
@@ -335,7 +334,6 @@ select {
     padding : 20px;
     box-shadow: -1px 2px 7px 0px rgb(203, 203, 203);
     border-radius : 5px;
-    /* visibility : hidden;*/
 }
 .ligneForm {
     display : flex;
