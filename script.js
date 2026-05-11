@@ -64,6 +64,8 @@ function effacerErreurs() {
     afficherErreur("passwordError", "");
     afficherErreur("newPasswordError", "");
     afficherErreur("nameError", "");
+    afficherErreur("passwordErrorCo", "");
+    afficherErreur("emailErrorCo", "");
 }
 
 function sauvegarderPanier() {
@@ -295,12 +297,14 @@ async function connecterUtilisateur() {
 
   // Validations
   if (!validerEmail(email)) {
-    afficherErreur("emailError", "Veuillez entrer un email valide");
+    effacerErreurs();
+    afficherErreur("emailErrorCo", "Veuillez entrer un email valide");
     return;
   }
 
   if (!validerMotDePasse(motDePasse)) {
-    afficherErreur("passwordError", "Le mot de passe doit contenir au moins 6 caractères");
+    effacerErreurs();
+    afficherErreur("passwordErrorCo", "Le mot de passe doit contenir au moins 6 caractères");
     return;
   }
 
